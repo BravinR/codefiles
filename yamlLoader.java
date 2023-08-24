@@ -38,3 +38,24 @@ public class YamlLoader{
     }
 }
 
+//This is a test for the above code
+import lombok.extern.slf4j.Slf4j;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import java.util.Map;
+
+@SpringBootTest
+@Slf4j
+public class YamlReaderServiceTest {
+
+    @Autowired
+    private YamlReaderService yamlReaderService;
+
+    @Test
+    public void testReadYamlFiles() {
+        Map<String, Data> resultMap = yamlReaderService.readYamlFiles();
+        log.info("Loaded YAML data: {}", resultMap);
+        // Add assertions here to validate the loaded data
+    }
+}
