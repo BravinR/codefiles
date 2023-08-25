@@ -1,61 +1,35 @@
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.PropertySource;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.stereotype.Service;
-import org.yaml.snakeyaml.Yaml;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
-@ConfigurationProperties(prefix = "spring")
-public class YamlConfigLoader{
+public class JsonFileService {
 
-    @Value("${yml.folder.path}")
-    private String ymlFolderPath;
+    private final ObjectMapper objectMapper = new ObjectMapper();
 
-    public Map<String, AlertConfig> readYamlFiles() {
-        Map<String, AlertConfig> resultMap = new HashMap<>();
-        File folder = new File(ymlFolderPath);
+    public List<Person> readJsonFilesFromFolder(String folderPath) throws IOException {
+        List<Person> people = new ArrayList<>();
+        
+        File folder = new File(folderPath);
+        File[] files = folder.listFiles((dir, name) -> name.endsWith(".json"));
 
-        if (folder.exists() && folder.isDirectory()) {
-            File[] yamlFiles = folder.listFiles((dir, name) -> name.endsWith(".yml"));
-            if (yamlFiles != null) {
-                Yaml yaml = new Yaml();
-                for (File yamlFile : yamlFiles) {
-                    try (FileInputStream fis = new FileInputStream(yamlFile)) {
-                        AlertConfig alertConfig = yaml.loadAs(fis, AlertConfig.class);
-                        resultMap.put(data.getKey(), data);
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                }
+        if (files != null) {
+            for (File file : files) {
+                Person person = objectMapper.readValue(file, Person.class);
+                people.add(person);
             }
         }
-        return resultMap;
+
+        return people;
     }
 }
 
-//This is a test for the above code
-import lombok.extern.slf4j.Slf4j;
-import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import java.util.Map;
-
-@SpringBootTest
-@Slf4j
-public class YamlConfigLoaderTest{
-
-    @Autowired
-    private YamlConfigLoader yamlConfigLoader;
-
-    @Test
-    public void testReadYamlFiles() {
-        Map<String, AlertConfig> resultMap = yamlReaderService.readYamlFiles();
-        log.info("Loaded YAML data: {}", resultMap);
-        // TODO:Add assertions here to validate the loaded data
-    }
-}
+    <dependency>
+        <groupId>com.fasterxml.jackson.core</groupId>
+        <artifactId>jackson-databind</artifactId>
+        <version>2.13.0</version> <!-- Use the latest version -->
+    </dependency>
