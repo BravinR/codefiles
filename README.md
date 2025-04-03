@@ -1,3 +1,4 @@
+```
 address-standardization/
 ├── src/
 │   ├── main/
@@ -35,3 +36,4 @@ address-standardization/
 │   │   └── resources/
 │   │       └── META-INF/
 │   │           └── spring.factories
+```
