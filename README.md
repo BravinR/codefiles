@@ -37,3 +37,13 @@ address-standardization/
 │   │       └── META-INF/
 │   │           └── spring.factories
 ```
+```
+/**
+ * Standardizes the provided address against the ServiceObjects API.
+ * 
+ * @param address The address to standardize
+ * @return StandardizationResponseDTO containing standardization results and/or corrections
+ * @throws AddressStandardizationException If a standardization error occurs
+ */
+StandardizationResponseDTO standardizeAddress(AddressDTO address) throws AddressStandardizationException;
+```
