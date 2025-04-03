@@ -1,40 +1,37 @@
-# 1. FileStatus Collection
-```
-address-validator/
+address-standardization/
 ├── src/
 │   ├── main/
 │   │   ├── java/
 │   │   │   └── com/
 │   │   │       └── yourcompany/
-│   │   │           └── addressvalidator/
+│   │   │           └── addressstandardization/
 │   │   │               ├── config/
-│   │   │               │   ├── AddressValidatorAutoConfiguration.java
-│   │   │               │   └── AddressValidatorProperties.java
+│   │   │               │   ├── AddressStandardizationAutoConfiguration.java
+│   │   │               │   └── AddressStandardizationProperties.java
 │   │   │               ├── client/
 │   │   │               │   ├── ServiceObjectsClient.java
 │   │   │               │   └── model/
 │   │   │               │       ├── ServiceObjectsRequest.java
 │   │   │               │       └── ServiceObjectsResponse.java
 │   │   │               ├── service/
-│   │   │               │   ├── AddressValidationService.java
+│   │   │               │   ├── AddressStandardizationService.java
 │   │   │               │   └── impl/
-│   │   │               │       └── ServiceObjectsAddressValidationService.java
+│   │   │               │       └── ServiceObjectsAddressStandardizationService.java
 │   │   │               ├── model/
 │   │   │               │   ├── Address.java
-│   │   │               │   ├── ValidationResult.java
-│   │   │               │   └── ValidationError.java
+│   │   │               │   ├── StandardizationResult.java
+│   │   │               │   └── StandardizationError.java
 │   │   │               ├── dto/
 │   │   │               │   ├── AddressDTO.java
-│   │   │               │   ├── ValidationRequestDTO.java
-│   │   │               │   └── ValidationResponseDTO.java
+│   │   │               │   ├── StandardizationRequestDTO.java
+│   │   │               │   └── StandardizationResponseDTO.java
 │   │   │               ├── exception/
-│   │   │               │   ├── AddressValidationException.java
+│   │   │               │   ├── AddressStandardizationException.java
 │   │   │               │   └── InvalidCredentialsException.java
 │   │   │               ├── util/
 │   │   │               │   └── AddressUtils.java
 │   │   │               └── builder/
-│   │   │                   └── AddressValidatorBuilder.java
+│   │   │                   └── AddressStandardizerBuilder.java
 │   │   └── resources/
 │   │       └── META-INF/
 │   │           └── spring.factories
-```
