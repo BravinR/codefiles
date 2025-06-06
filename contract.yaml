@@ -1,0 +1,180 @@
+openapi: 3.0.1
+info:
+  title: Address Standardization
+  description: |
+    This API is used to standardize addresses for the Marcus by Goldman Sachs platform.
+    It provides a consistent format for addresses, ensuring that they are accurate and up-to-date.
+    The API uses a third-party service to validate and standardize addresses, returning the standardized address in a structured format.
+  version: v1
+servers:
+  - url: https://sws.serviceobjects.com/AV3/api.svc
+  - url: https://swsbackup.serviceobjects.com/AV3/api.svc
+paths:
+  /GetBestMatchesJson:
+    post:
+      summary: Standardize an address
+      description: |
+        This endpoint standardizes an address using ServiceObjects API.
+        It takes an input address and returns the standardized address in a structured format.
+      operationId: standardizeAddress
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AddressStandardizationRequest"
+        required: true
+      responses:
+        "200":
+          description: Address standardized successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AddressStandardizationResponse"
+        "400":
+          description: Bad request
+        "401":
+          description: Authentication error
+        "500":
+          description: Internal server error
+components:
+  schemas:
+    AddressStandardizationRequest:
+      type: object
+      properties:
+        Address:
+          type: string
+          description: The primary address line.
+        Address2:
+          type: string
+          description: The secondary address line (e.g., apartment, suite number).
+        City:
+          type: string
+          description: The city.
+        State:
+          type: string
+          description: The state.
+        PostalCode:
+          type: string
+          description: The postal code (ZIP code).
+        LicenseKey:
+          type: string
+          description: The license key for accessing the ServiceObjects API.
+      required:
+        - Address
+        - City
+        - State
+        - PostalCode
+        - LicenseKey
+    AddressStandardizationResponse:
+      type: object
+      properties:
+        GetBestMatches_POSTJSONResult:
+          type: object
+          properties:
+            Addresses:
+              type: array
+              items:
+                $ref: "#/components/schemas/StandardizedAddress"
+              description: An array of standardized addresses.
+            IsCASS:
+              type: boolean
+              description: Indicates if the address was CASS certified.
+            Error:
+              $ref: "#/components/schemas/ServiceObjectsError"
+          description: The result object from the ServiceObjects API.
+    StandardizedAddress:
+      type: object
+      properties:
+        Address1:
+          type: string
+          description: The standardized primary address line.
+        Address2:
+          type: string
+          description: The standardized secondary address line.
+        City:
+          type: string
+          description: The standardized city.
+        State:
+          type: string
+          description: The standardized state.
+        Zip:
+          type: string
+          description: The standardized ZIP code.
+        IsResidential:
+          type: string
+          description: Indicates if the address is residential.
+        DPV:
+          type: string
+          description: Delivery Point Validation code.
+        DPVDesc:
+          type: string
+          description: Description of the DPV code.
+        DPVNotes:
+          type: string
+          description: DPV notes.
+        DPVNotesDesc:
+          type: string
+          description: Description of the DPV notes.
+        Corrections:
+          type: string
+          description: Correction codes applied.
+        CorrectionsDesc:
+          type: string
+          description: Description of the corrections applied.
+        BarcodeDigits:
+          type: string
+          description: Barcode digits for the address.
+        CarrierRoute:
+          type: string
+          description: Carrier route for mail delivery.
+        CongressCode:
+          type: string
+          description: Congressional district code.
+        CountyCode:
+          type: string
+          description: County code.
+        CountyName:
+          type: string
+          description: County name.
+        FragmentHouse:
+          type: string
+          description: House number fragment.
+        FragmentPreDir:
+          type: string
+          description: Pre-direction fragment.
+        FragmentStreet:
+          type: string
+          description: Street name fragment.
+        FragmentSuffix:
+          type: string
+          description: Street suffix fragment.
+        FragmentPostDir:
+          type: string
+          description: Post-direction fragment.
+        FragmentUnit:
+          type: string
+          description: Unit fragment.
+        Fragment:
+          type: string
+          description: General fragment.
+        FragmentPMBPrefix:
+          type: string
+          description: PMB prefix fragment.
+        FragmentPMBNumber:
+          type: string
+          description: PMB number fragment.
+    ServiceObjectsError:
+      type: object
+      properties:
+        Desc:
+          type: string
+          description: Description of the error.
+        DescCode:
+          type: string
+          description: Error description code.
+        Type:
+          type: string
+          description: Type of error.
+        TypeCode:
+          type: string
+          description: Error type code.
